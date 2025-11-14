@@ -120,7 +120,7 @@ TEMP_PROJECT="temp-rn-project"
 rm -rf "$TEMP_PROJECT"
 
 # Create new React Native project in temp directory
-npx react-native@latest init "$TEMP_PROJECT" --skip-install
+npx @react-native-community/cli@latest init "$TEMP_PROJECT" --skip-install
 
 print_success "Temporary project created"
 
