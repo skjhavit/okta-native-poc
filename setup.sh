@@ -119,7 +119,13 @@ fi
 # Check Xcode (on macOS)
 if [[ "$OSTYPE" == "darwin"* ]]; then
     if command_exists xcodebuild; then
-        XCODE_VERSION=$(xcodebuild -version | head -n 1)
+        XCODE_VERSION=$(xcodebuild -version 2>&1 | head -n 1)
+        if echo "$XCODE_VERSION" | grep -q "xcode-select: error"; then
+            print_error "Xcode path is not set correctly"
+            print_info "Current path points to Command Line Tools instead of Xcode.app"
+            print_info "Fix with: sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer"
+            exit 1
+        fi
         print_success "$XCODE_VERSION is installed"
     else
         print_error "Xcode is not installed"
@@ -129,6 +135,13 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 
     # Check for Xcode Command Line Tools
     if xcode-select -p &> /dev/null; then
+        XCODE_PATH=$(xcode-select -p)
+        if [[ "$XCODE_PATH" == *"CommandLineTools"* ]]; then
+            print_error "Xcode command line tools path is incorrect"
+            print_info "Current path: $XCODE_PATH"
+            print_info "Fix with: sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer"
+            exit 1
+        fi
         print_success "Xcode Command Line Tools are installed"
     else
         print_error "Xcode Command Line Tools are not installed"
