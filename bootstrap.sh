@@ -114,7 +114,7 @@ print_header "Initializing React Native Project"
 print_info "Creating temporary React Native project..."
 print_info "This may take a few minutes..."
 
-TEMP_PROJECT="temp-rn-project"
+TEMP_PROJECT="TempRNProject"
 
 # Remove temp project if it exists
 rm -rf "$TEMP_PROJECT"
