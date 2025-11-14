@@ -1,35 +1,43 @@
 /**
- * Okta Configuration
+ * Okta Configuration - Cargill QA Environment
  *
- * IMPORTANT: Replace these placeholders with your actual Okta configuration:
- * - {{OKTA_DOMAIN}}: Your Okta domain (e.g., dev-123456.okta.com)
- * - {{OKTA_CLIENT_ID}}: Your Okta application client ID
- * - {{APP_SCHEME}}: Your app's URL scheme (e.g., com.myapp)
+ * This configuration is set up for Cargill's QA Okta environment.
+ *
+ * IMPORTANT: Ensure your Okta application has the following settings:
+ * - Application Type: Native Application
+ * - Grant Types: Authorization Code, Refresh Token
+ * - Sign-in redirect URI: com.cargill.oktapoc:/callback
+ * - Sign-out redirect URI: com.cargill.oktapoc:/callback
  */
 
 export default {
-  // Your Okta domain WITHOUT https://
-  // Example: dev-123456.okta.com
-  issuer: 'https://{{OKTA_DOMAIN}}/oauth2/default',
+  // Cargill QA Okta authorization server
+  // Custom authorization server: auszzmfs36uUBqxYU0h7
+  issuer: 'https://login-qa-customer.cargill.com/oauth2/auszzmfs36uUBqxYU0h7',
 
-  // Your Okta application's Client ID
-  clientId: '{{OKTA_CLIENT_ID}}',
+  // Okta application Client ID
+  clientId: '0oa2jt1ncajFZjObu0h8',
 
   // Redirect URI for login callbacks
-  // Format: {{APP_SCHEME}}:/callback
-  // Example: com.myapp:/callback
-  redirectUri: '{{IOS_REDIRECT_URI}}',
+  // This must match EXACTLY in your Okta application settings
+  redirectUri: 'com.cargill.oktapoc:/callback',
 
   // Logout redirect URI
-  // Must match the login redirect URI
-  endSessionRedirectUri: '{{IOS_REDIRECT_URI}}',
+  // This must match EXACTLY in your Okta application settings
+  endSessionRedirectUri: 'com.cargill.oktapoc:/callback',
 
-  // Discovery URI - automatically configured from issuer
-  discoveryUri: 'https://{{OKTA_DOMAIN}}/oauth2/default',
+  // Discovery URI - same as issuer
+  discoveryUri: 'https://login-qa-customer.cargill.com/oauth2/auszzmfs36uUBqxYU0h7',
 
   // OAuth scopes
+  // - openid: Required for OIDC
+  // - profile: User profile information
+  // - email: User email address
+  // - offline_access: Enables refresh tokens
   scopes: ['openid', 'profile', 'email', 'offline_access'],
 
-  // PKCE is required for native apps
+  // Hardware-backed keystore
+  // Set to false to allow running on iOS Simulator
+  // For production, consider setting to true for enhanced security
   requireHardwareBackedKeyStore: false,
 };

@@ -53,19 +53,19 @@
 	<false/>
 
 	<!-- OKTA CONFIGURATION: URL Scheme for OAuth Redirect -->
-	<!-- Replace {{APP_SCHEME}} with your actual app scheme (e.g., com.myapp) -->
+	<!-- Configured for Cargill Okta POC -->
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.oktapoc</string>
+			<string>com.cargill.oktapoc</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<!-- Your app scheme for OAuth redirects -->
-				<!-- Example: If your redirect URI is com.myapp:/callback, use com.myapp here -->
-				<string>{{APP_SCHEME}}</string>
+				<!-- App scheme for OAuth redirects -->
+				<!-- Redirect URI: com.cargill.oktapoc:/callback -->
+				<string>com.cargill.oktapoc</string>
 			</array>
 		</dict>
 	</array>
