@@ -58,6 +58,26 @@ command_exists() {
 # Step 1: Check Prerequisites
 ###############################################################################
 
+###############################################################################
+# Check if project is initialized
+###############################################################################
+
+if [ ! -d "ios/OktaPOC.xcodeproj" ]; then
+    print_error "Xcode project not found!"
+    echo ""
+    print_info "The project needs to be initialized first."
+    print_info "Run the bootstrap script to create the Xcode project:"
+    echo ""
+    echo -e "  ${YELLOW}./bootstrap.sh${NC}"
+    echo ""
+    print_info "Then run this setup script again."
+    exit 1
+fi
+
+###############################################################################
+# Step 1: Check Prerequisites
+###############################################################################
+
 print_header "Step 1: Checking Prerequisites"
 
 # Check Node.js
