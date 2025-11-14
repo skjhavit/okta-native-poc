@@ -91,7 +91,7 @@ print_success "npx is available"
 
 print_header "Backing Up Configuration Files"
 
-BACKUP_DIR="okta-config-backup"
+BACKUP_DIR="/tmp/okta-config-backup-$$"
 mkdir -p "$BACKUP_DIR"
 
 # Backup our custom files
@@ -186,7 +186,8 @@ print_info "Removing temporary files..."
 rm -rf "$TEMP_PROJECT"
 print_success "Temporary project removed"
 
-print_info "Keeping backup in $BACKUP_DIR/ (you can delete this later)"
+print_info "Backup files cleaned up"
+rm -rf "$BACKUP_DIR"
 
 ###############################################################################
 # Success
