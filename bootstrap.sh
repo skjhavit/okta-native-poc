@@ -136,6 +136,15 @@ print_info "Copying Xcode project structure..."
 if [ -d "$TEMP_PROJECT/ios/$TEMP_PROJECT.xcodeproj" ]; then
     cp -r "$TEMP_PROJECT/ios/$TEMP_PROJECT.xcodeproj" ios/OktaPOC.xcodeproj
     print_success "Copied .xcodeproj"
+
+    # Rename scheme files
+    if [ -d "ios/OktaPOC.xcodeproj/xcshareddata/xcschemes" ]; then
+        if [ -f "ios/OktaPOC.xcodeproj/xcshareddata/xcschemes/$TEMP_PROJECT.xcscheme" ]; then
+            mv "ios/OktaPOC.xcodeproj/xcshareddata/xcschemes/$TEMP_PROJECT.xcscheme" \
+               "ios/OktaPOC.xcodeproj/xcshareddata/xcschemes/OktaPOC.xcscheme"
+            print_success "Renamed scheme file"
+        fi
+    fi
 fi
 
 # Copy xcworkspace
@@ -152,8 +161,15 @@ if [ -f "ios/OktaPOC.xcodeproj/project.pbxproj" ]; then
     # macOS compatible sed (works on both macOS and Linux)
     if [[ "$OSTYPE" == "darwin"* ]]; then
         sed -i '' "s/$TEMP_PROJECT/OktaPOC/g" ios/OktaPOC.xcodeproj/project.pbxproj
+        # Also update scheme file if it exists
+        if [ -f "ios/OktaPOC.xcodeproj/xcshareddata/xcschemes/OktaPOC.xcscheme" ]; then
+            sed -i '' "s/$TEMP_PROJECT/OktaPOC/g" ios/OktaPOC.xcodeproj/xcshareddata/xcschemes/OktaPOC.xcscheme
+        fi
     else
         sed -i "s/$TEMP_PROJECT/OktaPOC/g" ios/OktaPOC.xcodeproj/project.pbxproj
+        if [ -f "ios/OktaPOC.xcodeproj/xcshareddata/xcschemes/OktaPOC.xcscheme" ]; then
+            sed -i "s/$TEMP_PROJECT/OktaPOC/g" ios/OktaPOC.xcodeproj/xcshareddata/xcschemes/OktaPOC.xcscheme
+        fi
     fi
     print_success "Updated project references"
 fi
